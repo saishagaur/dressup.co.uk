@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Dress Up</title>
+</head>
+
+<body>
+
+<h1>✨ Dress Up</h1>
+
+<p>Choose your character!</p>
+
+<button onclick="smallEyes()">
+Small Eyes
+</button>
+
+<button onclick="bigEyes()">
+Big Eyes
+</button>
+
+<div id="face">
+
+  <div id="eye1"></div>
+  <div id="eye2"></div>
+
+  <div id="mouth"></div>
+
+</div>
+
+  <div id="hair"></div>
+  <button onclick="brownHair()">Brown Hair</button>
+<button onclick="blackHair()">Black Hair</button>
+<button onclick="blondeHair()">Blonde Hair</button>
+</body>
+</html>
+
+body {
+background: pink;
+text-align: center;
+font-family: Arial;
+}
+h1 {
+color: purple;
+}
+
+button {
+padding: 12px;
+margin: 5px;
+border-radius: 10px;
+border: none;
+background: purple;
+color: white;
+}
+#face {
+width: 250px;
+height: 300px;
+background: peachpuff;
+border-radius: 50%;
+margin: 30px auto;
+position: relative;
+}
+
+#eye1,
+#eye2 {
+width: 30px;
+height: 30px;
+background: black;
+border-radius: 50%;
+position: absolute;
+top: 100px;
+}
+
+#eye1 {
+left: 60px;
+}
+
+#eye2 {
+right: 60px;
+}
+
+#mouth {
+width: 70px;
+height: 30px;
+border-bottom: 5px solid red;
+border-radius: 50%;
+position: absolute;
+left: 90px;
+top: 190px;
+}
+#hair {
+width: 250px;
+height: 100px;
+background: brown;
+border-radius: 50% 50% 20% 20%;
+position: absolute;
+left: 50%;
+transform: translateX(-50%);
+top: 130px;
+}
+
+function smallEyes() {
+
+document.getElementById("eye1").style.width = "20px";
+document.getElementById("eye1").style.height = "20px";
+
+document.getElementById("eye2").style.width = "20px";
+document.getElementById("eye2").style.height = "20px";
+
+}
+
+function bigEyes() {
+
+document.getElementById("eye1").style.width = "50px";
+document.getElementById("eye1").style.height = "50px";
+
+document.getElementById("eye2").style.width = "50px";
+document.getElementById("eye2").style.height = "50px";
+
+}
+function brownHair() {
+document.getElementById("hair").style.background = "brown";
+}
+
+function blackHair() {
+document.getElementById("hair").style.background = "black";
+}
+
+function blondeHair() {
+document.getElementById("hair").style.background = "gold";
+}
