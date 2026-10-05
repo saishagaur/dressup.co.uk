@@ -1,194 +1,3267 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-<title>Dress Up</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<body>
+<title>Visual Avatar Creator</title>
 
-<h1>✨ Dress Up</h1>
-
-<p>Choose your character!</p>
-<p>Choose what describes the eyes best</p>
-<button onclick="smallEyes()">
-Small Eyes
-</button>
-
-<button onclick="bigEyes()">
-Big Eyes
-</button>
- 
-  <p> Choose the hair colour </p>
-  
-  <button onclick="brownHair()">Brown Hair</button>
-<button onclick="blackHair()">Black Hair</button>
-<button onclick="blondeHair()">Blonde Hair</button>
-
- <p>How would you like the clothes to look?</p>
- <button onclick="tshirtandshorts ()">tshirt nd shorts</button>
-<button onclick="longpants()">long pants</button>
-<button onclick="dress()">dress</button>
-
- <p>What king of shoes would you like?</p>
- <button onclick="longboots ()">long booots</button>
-<button onclick="heels()">heels</button>
-<button onclick="flipflops()">flipflops</button>
-
- <p>how does the face look like?</p>
- <button onclick="smiling ()">smiling</button>
-<button onclick="excited()">excited</button>
-<button onclick="sad()">sad</button>
- <button onclick="tired()">tired</button>
-
- <p>how would the eyelashes be?</p>
- <button onclick="long ()">long</button>
-<button onclick="short()">short</button>
-<button onclick="none()">none</button>
-
- <p>how is the hairstyle like?</p>
- <button onclick="pony ()">pony</button>
-<button onclick="braids()">braids</button>
-<button onclick="open()">open</button>
-
- <div id="face">
-  <div id="eye1"></div>
-  <div id="eye2"></div>
-  <div id="mouth"></div>
- </div>
-
- <div id="hair">
-</div>
- <div id="clothes">
-</div>
-  <div id="shoes">
-</div>
 <style>
+/* =========================================================
+VISUAL AVATAR CREATOR
+One HTML file: HTML + CSS + JavaScript
+========================================================= */
 
+* {
+box-sizing: border-box;
+}
+
+:root {
+--bg: #f4f5f9;
+--panel: #ffffff;
+--text: #20222a;
+--muted: #747887;
+--border: #e1e3ea;
+--accent: #6957e8;
+--accent-light: #eeeaff;
+--shadow: 0 12px 35px rgba(30, 32, 50, .10);
+--radius: 20px;
+}
 
 body {
-background: pink;
-text-align: center;
-font-family: Arial;
-}
-h1 {
-color: purple;
+margin: 0;
+min-height: 100vh;
+background: var(--bg);
+color: var(--text);
+font-family:
+system-ui,
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+sans-serif;
 }
 
 button {
-padding: 12px;
-margin: 5px;
-border-radius: 10px;
-border: none;
-background: purple;
+font: inherit;
+}
+
+
+/* =========================================================
+HEADER
+========================================================= */
+
+header {
+position: sticky;
+top: 0;
+z-index: 50;
+
+background: rgba(255,255,255,.96);
+backdrop-filter: blur(10px);
+
+border-bottom: 1px solid var(--border);
+padding: 15px 20px;
+}
+
+.header-inner {
+max-width: 1400px;
+margin: auto;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 15px;
+}
+
+.logo {
+display: flex;
+align-items: center;
+gap: 11px;
+}
+
+.logo-icon {
+width: 45px;
+height: 45px;
+
+display: grid;
+place-items: center;
+
+background: var(--accent-light);
+border-radius: 14px;
+
+font-size: 25px;
+}
+
+.logo h1 {
+margin: 0;
+font-size: 19px;
+}
+
+.logo p {
+margin: 2px 0 0;
+color: var(--muted);
+font-size: 12px;
+}
+
+.header-actions {
+display: flex;
+gap: 7px;
+}
+
+
+/* =========================================================
+BUTTONS
+========================================================= */
+
+.action-button {
+border: 1px solid var(--border);
+background: white;
+color: var(--text);
+
+border-radius: 11px;
+padding: 10px 14px;
+
+cursor: pointer;
+
+transition: .15s ease;
+}
+
+.action-button:hover {
+transform: translateY(-1px);
+border-color: #c8c9d5;
+}
+
+.primary-button {
+background: var(--accent);
 color: white;
+border-color: var(--accent);
 }
-#hair {
-width: 250px;
-height: 75px;
-background: brown;
-border-radius: 50% 50% 20% 20%;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-top: 130px;
-} 
-#face {
-width: 250px;
-height: 300px;
-background: peachpuff;
+
+.primary-button:hover {
+background: #5645d0;
+}
+
+
+/* =========================================================
+MAIN LAYOUT
+========================================================= */
+
+.app {
+max-width: 1400px;
+margin: auto;
+padding: 22px;
+
+display: grid;
+grid-template-columns:
+minmax(350px, .9fr)
+minmax(500px, 1.1fr);
+
+gap: 22px;
+}
+
+.preview-panel,
+.controls-panel {
+background: var(--panel);
+border: 1px solid var(--border);
+border-radius: var(--radius);
+box-shadow: var(--shadow);
+}
+
+
+/* =========================================================
+PREVIEW
+========================================================= */
+
+.preview-panel {
+min-height: calc(100vh - 110px);
+
+position: sticky;
+top: 90px;
+
+display: flex;
+flex-direction: column;
+}
+
+.preview-header {
+padding: 17px 20px;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+border-bottom: 1px solid var(--border);
+}
+
+.preview-header h2 {
+margin: 0;
+font-size: 16px;
+}
+
+.preview-area {
+flex: 1;
+
+display: grid;
+place-items: center;
+
+padding: 25px;
+
+background:
+radial-gradient(
+circle at center,
+#fff 0%,
+#faf9ff 55%,
+#f0eeff 100%
+);
+
+border-radius: 0 0 var(--radius) var(--radius);
+}
+
+#avatar {
+width: min(100%, 470px);
+height: auto;
+
+filter:
+drop-shadow(
+0 22px 25px
+rgba(40,40,70,.13)
+);
+}
+
+.toolbar {
+display: flex;
+gap: 6px;
+}
+
+.small-button {
+width: 36px;
+height: 36px;
+
+border: 1px solid var(--border);
+border-radius: 10px;
+
+background: white;
+
+cursor: pointer;
+}
+
+.small-button:disabled {
+opacity: .3;
+cursor: not-allowed;
+}
+
+
+/* =========================================================
+CONTROLS
+========================================================= */
+
+.controls-panel {
+padding: 20px;
+}
+
+.section {
+margin-bottom: 28px;
+}
+
+.section-header {
+display: flex;
+align-items: center;
+gap: 9px;
+margin-bottom: 10px;
+}
+
+.section-number {
+width: 27px;
+height: 27px;
+
+display: grid;
+place-items: center;
+
 border-radius: 50%;
-margin: 30px auto;
-position: relative;
+
+background: var(--accent-light);
+color: var(--accent);
+
+font-size: 12px;
+font-weight: 800;
 }
 
-#eye1,
-#eye2 {
-width: 30px;
-height: 30px;
-background: black;
+.section-header h3 {
+margin: 0;
+font-size: 19px;
+}
+
+
+/* =========================================================
+VISUAL OPTION GRID
+========================================================= */
+
+.option-grid {
+display: grid;
+
+grid-template-columns:
+repeat(auto-fill, minmax(88px, 1fr));
+
+gap: 9px;
+}
+
+
+/*
+IMPORTANT:
+There is intentionally no visible text inside these
+buttons. The picture is the selection.
+*/
+
+.option {
+min-height: 88px;
+
+padding: 5px;
+
+display: grid;
+place-items: center;
+
+border: 2px solid transparent;
+border-radius: 15px;
+
+background: #fafafd;
+
+cursor: pointer;
+
+transition:
+transform .15s ease,
+border-color .15s ease,
+background .15s ease;
+}
+
+.option:hover {
+transform: translateY(-2px);
+background: #f4f1ff;
+}
+
+.option.selected {
+border-color: var(--accent);
+background: var(--accent-light);
+
+box-shadow:
+0 0 0 3px
+rgba(105,87,232,.08);
+}
+
+.option:focus-visible {
+outline: 3px solid
+rgba(105,87,232,.3);
+
+outline-offset: 2px;
+}
+
+.option svg {
+width: 100%;
+height: 78px;
+}
+
+
+/* =========================================================
+COLOUR SWATCHES
+========================================================= */
+
+.colour-option {
+min-height: 65px;
+}
+
+.colour-circle {
+width: 43px;
+height: 43px;
+
 border-radius: 50%;
-position: absolute;
-top: 100px;
+
+border: 3px solid rgba(0,0,0,.08);
+
+box-shadow:
+inset 0 0 0 1px
+rgba(255,255,255,.3);
 }
 
-#eye1 {
-left: 60px;
+.colour-option.selected
+.colour-circle {
+box-shadow:
+0 0 0 3px white,
+0 0 0 5px var(--accent);
 }
 
-#eye2 {
-right: 60px;
+
+/* =========================================================
+EXPORT
+========================================================= */
+
+.export-area {
+padding-top: 20px;
+border-top: 1px solid var(--border);
+
+display: grid;
+grid-template-columns: 1fr 1fr;
+
+gap: 9px;
 }
 
-#mouth {
-width: 70px;
-height: 30px;
-border-bottom: 5px solid red;
-border-radius: 50%;
-position: absolute;
-left: 90px;
-top: 190px;
+.export-area button {
+padding: 13px;
 }
 
- #clothes {
-width: 350px;
-height: 500px;
-background: brown;
-border-radius: 50% 50% 20% 20%;
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 950px) {
+
+.app {
+grid-template-columns: 1fr;
+}
+
+.preview-panel {
 position: relative;
-left: 50%;
-transform: translateX(-50%);
-top: 130px;
-} 
+top: auto;
+min-height: auto;
+}
 
- #shoes {
-width: 100px;
-height: 50px;
-background: brown;
-border-radius: 50% 50% 20% 20%;
-position: relative;
-left: 50%;
-transform: translateX(-50%);
-top: 130px;
-} 
+.preview-area {
+min-height: 430px;
+}
+}
 
+@media (max-width: 600px) {
+
+header {
+padding: 11px 13px;
+}
+
+.logo p {
+display: none;
+}
+
+.header-actions span {
+display: none;
+}
+
+.app {
+padding: 11px;
+gap: 12px;
+}
+
+.controls-panel {
+padding: 14px;
+}
+
+.preview-area {
+min-height: 370px;
+padding: 12px;
+}
+
+.option-grid {
+grid-template-columns:
+repeat(auto-fill, minmax(72px, 1fr));
+}
+
+.option {
+min-height: 76px;
+}
+
+.option svg {
+height: 67px;
+}
+
+.export-area {
+grid-template-columns: 1fr;
+}
+}
 </style>
-  
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+HEADER
+======================================================= -->
+
+<header>
+
+<div class="header-inner">
+
+<div class="logo">
+
+<div class="logo-icon">
+🧑‍🎨
+</div>
+
+<div>
+<h1>Avatar Creator</h1>
+<p>Choose pictures to create your character</p>
+</div>
+
+</div>
+
+<div class="header-actions">
+
+<button
+class="action-button"
+id="randomButton"
+aria-label="Random character">
+🎲 <span>Random</span>
+</button>
+
+<button
+class="action-button"
+id="resetButton"
+aria-label="Reset character">
+↺ <span>Reset</span>
+</button>
+
+</div>
+
+</div>
+
+</header>
+
+
+
+<!-- =======================================================
+MAIN
+======================================================= -->
+
+<main class="app">
+
+
+<!-- ===================================================
+CHARACTER PREVIEW
+=================================================== -->
+
+<section class="preview-panel">
+
+<div class="preview-header">
+
+<h2>Your character</h2>
+
+<div class="toolbar">
+
+<button
+class="small-button"
+id="undoButton"
+aria-label="Undo"
+title="Undo">
+↶
+</button>
+
+<button
+class="small-button"
+id="redoButton"
+aria-label="Redo"
+title="Redo">
+↷
+</button>
+
+</div>
+
+</div>
+
+
+<div class="preview-area">
+
+<svg
+id="avatar"
+viewBox="0 0 500 650"
+xmlns="http://www.w3.org/2000/svg"
+aria-label="Avatar preview">
+
+<rect
+width="500"
+height="650"
+rx="40"
+fill="#f7f5ff"/>
+
+<g id="avatarCharacter"></g>
+
+</svg>
+
+</div>
+
+</section>
+
+
+
+<!-- ===================================================
+CONTROLS
+=================================================== -->
+
+<section class="controls-panel">
+
+
+<!-- FACE -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">1</div>
+<h3>👤</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="face">
+</div>
+
+</div>
+
+
+<!-- SKIN -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">2</div>
+<h3>🎨</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="skin">
+</div>
+
+</div>
+
+
+<!-- HAIR COLOUR -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">3</div>
+<h3>💇</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="hairColor">
+</div>
+
+</div>
+
+
+<!-- HAIR STYLE -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">4</div>
+<h3>💈</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="hair">
+</div>
+
+</div>
+
+
+<!-- EYES -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">5</div>
+<h3>👁️</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="eyes">
+</div>
+
+</div>
+
+
+<!-- NOSE -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">6</div>
+<h3>👃</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="nose">
+</div>
+
+</div>
+
+
+<!-- MOUTH -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">7</div>
+<h3>👄</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="mouth">
+</div>
+
+</div>
+
+
+<!-- EARS -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">8</div>
+<h3>👂</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="ears">
+</div>
+
+</div>
+
+
+<!-- ACCESSORIES -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">9</div>
+<h3>👓</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="accessory">
+</div>
+
+</div>
+
+
+<!-- CLOTHES -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">10</div>
+<h3>👕</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="clothes">
+</div>
+
+</div>
+
+
+<!-- CLOTHING COLOUR -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">11</div>
+<h3>🎨</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="clothesColor">
+</div>
+
+</div>
+
+
+<!-- SHOES -->
+<div class="section">
+
+<div class="section-header">
+<div class="section-number">12</div>
+<h3>✨</h3>
+</div>
+
+<div
+class="option-grid"
+data-category="shoes">
+</div>
+
+</div>
+
+
+<!-- DOWNLOAD -->
+<div class="export-area">
+
+<button
+class="action-button primary-button"
+id="pngButton">
+⬇️ PNG
+</button>
+
+<button
+class="action-button"
+id="svgButton">
+⬇️ SVG
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+
 <script>
-  //function smallEyes() {
 
-document.getElementById("eye1").style.width = "20px";
-document.getElementById("eye1").style.height = "20px";
+/* =========================================================
+DATA
+========================================================= */
 
-document.getElementById("eye2").style.width = "20px";
-document.getElementById("eye2").style.height = "20px";
+const skinColours = [
+"#F8D7C0",
+"#EFC1A4",
+"#D99B76",
+"#B97855",
+"#8B5138",
+"#613928"
+];
+
+const hairColours = [
+"#211915",
+"#5A3422",
+"#8A552F",
+"#D9A441",
+"#E8C48C",
+"#B93C38",
+"#6B4CA0",
+"#4C79A8"
+];
+
+const clothesColours = [
+"#6C5CE7",
+"#EA5B7A",
+"#3D8FD1",
+"#3AA876",
+"#F0A83A",
+"#E95B42",
+"#343B56",
+"#F4F4F6"
+];
+
+
+const defaultState = {
+face: 1,
+skin: 2,
+hairColor: 1,
+hair: 0,
+eyes: 1,
+nose: 0,
+mouth: 0,
+ears: 0,
+accessory: 0,
+clothes: 0,
+clothesColor: 0,
+shoes: 0
+};
+
+let state = {...defaultState};
+
+let history = [];
+let historyIndex = -1;
+
+
+/* =========================================================
+OPTION COUNTS
+========================================================= */
+
+const optionCounts = {
+face: 5,
+skin: skinColours.length,
+hairColor: hairColours.length,
+hair: 6,
+eyes: 6,
+nose: 5,
+mouth: 6,
+ears: 4,
+accessory: 6,
+clothes: 5,
+clothesColor: clothesColours.length,
+shoes: 4
+};
+
+
+/* =========================================================
+UTILITY
+========================================================= */
+
+function cloneState(value) {
+return JSON.parse(JSON.stringify(value));
+}
+
+
+/* =========================================================
+MINI VISUAL AVATAR
+---------------------------------------------------------
+This is now only used for the few categories where a
+complete mini-character is useful. Most categories below
+have dedicated feature thumbnails.
+========================================================= */
+
+function baseThumbnail(inner = "") {
+
+return `
+<svg
+viewBox="0 0 100 90"
+xmlns="http://www.w3.org/2000/svg">
+
+<rect
+x="2"
+y="2"
+width="96"
+height="86"
+rx="18"
+fill="#ffffff"/>
+
+${inner}
+
+</svg>
+`;
+}
+
+
+/* =========================================================
+FACE THUMBNAILS
+========================================================= */
+
+function faceThumbnail(index) {
+
+const shapes = [
+
+`
+<circle
+cx="50"
+cy="45"
+r="28"
+fill="${skinColours[state.skin]}"/>
+`,
+
+`
+<ellipse
+cx="50"
+cy="45"
+rx="29"
+ry="32"
+fill="${skinColours[state.skin]}"/>
+`,
+
+`
+<path
+d="
+M22 30
+Q20 15 50 14
+Q80 15 78 30
+L74 60
+Q68 76 50 78
+Q32 76 26 60Z"
+fill="${skinColours[state.skin]}"/>
+`,
+
+`
+<path
+d="
+M25 28
+Q20 18 50 13
+Q80 18 75 28
+L78 58
+Q72 76 50 78
+Q28 76 22 58Z"
+fill="${skinColours[state.skin]}"/>
+`,
+
+`
+<path
+d="
+M21 35
+Q20 17 50 13
+Q80 17 79 35
+L72 62
+Q65 77 50 79
+Q35 77 28 62Z"
+fill="${skinColours[state.skin]}"/>
+`
+
+];
+
+return baseThumbnail(shapes[index]);
+}
+
+
+/* =========================================================
+SKIN THUMBNAILS
+========================================================= */
+
+function skinThumbnail(index) {
+
+return `
+<svg
+viewBox="0 0 100 70"
+xmlns="http://www.w3.org/2000/svg">
+
+<circle
+cx="50"
+cy="35"
+r="25"
+fill="${skinColours[index]}"
+stroke="rgba(0,0,0,.12)"
+stroke-width="2"/>
+
+</svg>
+`;
+}
+
+
+/* =========================================================
+HAIR COLOUR THUMBNAILS
+========================================================= */
+
+function hairColourThumbnail(index) {
+
+return `
+<svg
+viewBox="0 0 100 80"
+xmlns="http://www.w3.org/2000/svg">
+
+<path
+d="
+M20 55
+Q15 15 50 10
+Q85 15 80 55
+Q72 30 50 31
+Q28 30 20 55Z"
+fill="${hairColours[index]}"/>
+
+<circle
+cx="35"
+cy="52"
+r="12"
+fill="${skinColours[state.skin]}"/>
+
+<circle
+cx="65"
+cy="52"
+r="12"
+fill="${skinColours[state.skin]}"/>
+
+</svg>
+`;
+}
+
+
+/* =========================================================
+HAIR STYLE THUMBNAILS
+========================================================= */
+
+function hairThumbnail(index) {
+
+const hair =
+hairColours[state.hairColor];
+
+const styles = [
+
+/* 0 - short */
+`
+<path
+d="
+M18 52
+Q15 14 50 11
+Q85 14 82 52
+Q72 28 50 28
+Q28 28 18 52Z"
+fill="${hair}"/>
+`,
+
+/* 1 - long */
+`
+<path
+d="
+M17 63
+Q10 12 50 9
+Q90 12 83 63
+L70 70
+L70 35
+Q50 25 30 35
+L30 70Z"
+fill="${hair}"/>
+`,
+
+/* 2 - curly */
+`
+<circle cx="25" cy="30" r="13" fill="${hair}"/>
+<circle cx="38" cy="19" r="14" fill="${hair}"/>
+<circle cx="53" cy="17" r="15" fill="${hair}"/>
+<circle cx="68" cy="21" r="14" fill="${hair}"/>
+<circle cx="77" cy="34" r="13" fill="${hair}"/>
+<circle cx="23" cy="45" r="12" fill="${hair}"/>
+<circle cx="77" cy="48" r="12" fill="${hair}"/>
+`,
+
+/* 3 - afro */
+`
+<circle cx="50" cy="40" r="34" fill="${hair}"/>
+<circle cx="27" cy="29" r="14" fill="${hair}"/>
+<circle cx="73" cy="29" r="14" fill="${hair}"/>
+<circle cx="30" cy="55" r="13" fill="${hair}"/>
+<circle cx="70" cy="55" r="13" fill="${hair}"/>
+`,
+
+/* 4 - ponytail */
+`
+<path
+d="
+M20 52
+Q14 15 50 12
+Q84 15 76 55
+Q65 29 50 29
+Q32 29 20 52Z"
+fill="${hair}"/>
+
+<circle
+cx="82"
+cy="28"
+r="15"
+fill="${hair}"/>
+
+<path
+d="M74 29 Q90 40 86 63"
+stroke="${hair}"
+stroke-width="11"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+/* 5 - fringe */
+`
+<path
+d="
+M18 52
+Q15 12 50 10
+Q85 12 82 52
+Q73 34 65 30
+Q56 45 48 30
+Q38 43 27 31
+Q22 40 18 52Z"
+fill="${hair}"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+EYE THUMBNAILS
+========================================================= */
+
+function eyeThumbnail(index) {
+
+const styles = [
+
+/* round */
+`
+<circle
+cx="35"
+cy="45"
+r="13"
+fill="white"
+stroke="#333"
+stroke-width="3"/>
+
+<circle
+cx="65"
+cy="45"
+r="13"
+fill="white"
+stroke="#333"
+stroke-width="3"/>
+
+<circle cx="35" cy="45" r="5"/>
+<circle cx="65" cy="45" r="5"/>
+`,
+
+/* large */
+`
+<circle
+cx="35"
+cy="45"
+r="17"
+fill="white"
+stroke="#333"
+stroke-width="3"/>
+
+<circle
+cx="65"
+cy="45"
+r="17"
+fill="white"
+stroke="#333"
+stroke-width="3"/>
+
+<circle cx="35" cy="45" r="6"/>
+<circle cx="65" cy="45" r="6"/>
+`,
+
+/* narrow */
+`
+<ellipse
+cx="35"
+cy="45"
+rx="18"
+ry="7"
+fill="white"
+stroke="#333"
+stroke-width="3"/>
+
+<ellipse
+cx="65"
+cy="45"
+rx="18"
+ry="7"
+fill="white"
+stroke="#333"
+stroke-width="3"/>
+
+<circle cx="35" cy="45" r="4"/>
+<circle cx="65" cy="45" r="4"/>
+`,
+
+/* happy */
+`
+<path
+d="M20 47 Q35 28 50 47"
+stroke="#333"
+stroke-width="6"
+fill="none"
+stroke-linecap="round"/>
+
+<path
+d="M50 47 Q65 28 80 47"
+stroke="#333"
+stroke-width="6"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+/* sleepy */
+`
+<path
+d="M20 45 Q35 55 50 45"
+stroke="#333"
+stroke-width="5"
+fill="none"
+stroke-linecap="round"/>
+
+<path
+d="M50 45 Q65 55 80 45"
+stroke="#333"
+stroke-width="5"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+/* dots */
+`
+<circle
+cx="35"
+cy="45"
+r="8"/>
+
+<circle
+cx="65"
+cy="45"
+r="8"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+NOSE THUMBNAILS
+========================================================= */
+
+function noseThumbnail(index) {
+
+const styles = [
+
+`
+<path
+d="M50 25 Q43 45 50 53"
+stroke="#9b614d"
+stroke-width="5"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="M50 22 L40 52 Q50 60 60 52"
+stroke="#9b614d"
+stroke-width="5"
+fill="none"
+stroke-linecap="round"
+stroke-linejoin="round"/>
+`,
+
+`
+<path
+d="M50 22 Q65 43 50 54 Q35 43 50 22"
+stroke="#9b614d"
+stroke-width="5"
+fill="none"/>
+`,
+
+`
+<path
+d="M50 25 L50 54"
+stroke="#9b614d"
+stroke-width="7"
+stroke-linecap="round"/>
+`,
+
+`
+<circle
+cx="50"
+cy="48"
+r="10"
+fill="#9b614d"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+MOUTH THUMBNAILS
+========================================================= */
+
+function mouthThumbnail(index) {
+
+const styles = [
+
+`
+<path
+d="M25 45 Q50 60 75 45"
+stroke="#8c3d3d"
+stroke-width="6"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="M25 45 Q50 28 75 45 Q50 62 25 45Z"
+fill="#c95568"/>
+`,
+
+`
+<path
+d="M25 45 Q50 45 75 45"
+stroke="#8c3d3d"
+stroke-width="6"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="M25 43 Q50 63 75 43"
+stroke="#7e3038"
+stroke-width="9"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="M25 45 Q50 32 75 45"
+stroke="#d66a7c"
+stroke-width="9"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="M30 46 Q50 52 70 46"
+stroke="#9d4a4a"
+stroke-width="5"
+fill="none"
+stroke-linecap="round"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+EAR THUMBNAILS
+========================================================= */
+
+function earThumbnail(index) {
+
+const skin =
+skinColours[state.skin];
+
+const styles = [
+
+`
+<ellipse
+cx="27"
+cy="45"
+rx="13"
+ry="22"
+fill="${skin}"/>
+
+<ellipse
+cx="73"
+cy="45"
+rx="13"
+ry="22"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="M35 24 Q8 28 20 57 Q28 66 37 54"
+fill="${skin}"/>
+
+<path
+d="M65 24 Q92 28 80 57 Q72 66 63 54"
+fill="${skin}"/>
+`,
+
+`
+<circle
+cx="27"
+cy="45"
+r="16"
+fill="${skin}"/>
+
+<circle
+cx="73"
+cy="45"
+r="16"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="M34 22 Q5 40 27 67 Q38 68 39 48"
+fill="${skin}"/>
+
+<path
+d="M66 22 Q95 40 73 67 Q62 68 61 48"
+fill="${skin}"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+ACCESSORY THUMBNAILS
+========================================================= */
+
+function accessoryThumbnail(index) {
+
+const styles = [
+
+/* none */
+`
+<circle
+cx="50"
+cy="45"
+r="4"
+fill="#dfe0e7"/>
+`,
+
+/* round glasses */
+`
+<circle
+cx="32"
+cy="45"
+r="18"
+fill="none"
+stroke="#282b35"
+stroke-width="5"/>
+
+<circle
+cx="68"
+cy="45"
+r="18"
+fill="none"
+stroke="#282b35"
+stroke-width="5"/>
+
+<path
+d="M50 45 L50 45"
+stroke="#282b35"
+stroke-width="6"/>
+`,
+
+/* square glasses */
+`
+<rect
+x="13"
+y="27"
+width="35"
+height="30"
+rx="7"
+fill="none"
+stroke="#282b35"
+stroke-width="5"/>
+
+<rect
+x="52"
+y="27"
+width="35"
+height="30"
+rx="7"
+fill="none"
+stroke="#282b35"
+stroke-width="5"/>
+`,
+
+/* sunglasses */
+`
+<rect
+x="12"
+y="30"
+width="37"
+height="25"
+rx="5"
+fill="#292d38"/>
+
+<rect
+x="51"
+y="30"
+width="37"
+height="25"
+rx="5"
+fill="#292d38"/>
+
+<path
+d="M49 40 L51 40"
+stroke="#292d38"
+stroke-width="6"/>
+`,
+
+/* star */
+`
+<path
+d="
+M50 16
+L57 35
+L78 35
+L61 47
+L67 67
+L50 55
+L33 67
+L39 47
+L22 35
+L43 35Z"
+fill="#f0a83a"/>
+`,
+
+/* bow */
+`
+<path
+d="M50 44 Q20 18 18 45 Q20 70 50 51Z"
+fill="#ea5b7a"/>
+
+<path
+d="M50 44 Q80 18 82 45 Q80 70 50 51Z"
+fill="#ea5b7a"/>
+
+<circle
+cx="50"
+cy="48"
+r="9"
+fill="#c73f5d"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+CLOTHING THUMBNAILS
+========================================================= */
+
+function clothesThumbnail(index) {
+
+const colour =
+clothesColours[state.clothesColor];
+
+const styles = [
+
+/* T-shirt */
+`
+<path
+d="
+M27 28
+L42 20
+Q50 30 58 20
+L73 28
+L87 67
+L13 67Z"
+fill="${colour}"/>
+
+<path
+d="M42 20 Q50 32 58 20"
+stroke="white"
+stroke-opacity=".4"
+stroke-width="3"
+fill="none"/>
+`,
+
+/* hoodie */
+`
+<path
+d="
+M28 28
+Q34 19 42 20
+L50 31
+L58 20
+Q66 19 72 28
+L88 69
+L12 69Z"
+fill="${colour}"/>
+
+<path
+d="M39 23 Q50 39 61 23"
+fill="none"
+stroke="white"
+stroke-opacity=".35"
+stroke-width="5"/>
+`,
+
+/* jacket */
+`
+<path
+d="
+M27 28
+L42 20
+L50 31
+L58 20
+L73 28
+L87 69
+L13 69Z"
+fill="${colour}"/>
+
+<path
+d="M50 31 L50 69"
+stroke="white"
+stroke-opacity=".55"
+stroke-width="3"/>
+`,
+
+/* dress */
+`
+<path
+d="
+M40 20
+L60 20
+L66 39
+L87 69
+L13 69
+L34 39Z"
+fill="${colour}"/>
+
+<path
+d="M40 20 Q50 31 60 20"
+stroke="white"
+stroke-opacity=".4"
+stroke-width="3"
+fill="none"/>
+`,
+
+/* shirt */
+`
+<path
+d="
+M30 28
+L43 20
+L50 30
+L57 20
+L70 28
+L84 68
+L16 68Z"
+fill="${colour}"/>
+
+<path
+d="M43 20 L50 31 L57 20"
+stroke="white"
+stroke-opacity=".35"
+stroke-width="4"
+fill="none"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+SHOE THUMBNAILS
+========================================================= */
+
+function shoeThumbnail(index) {
+
+const styles = [
+
+/* black */
+`
+<path
+d="
+M12 48
+L44 48
+L48 63
+L8 63
+Q3 56 12 48Z"
+fill="#292933"/>
+
+<path
+d="
+M56 48
+L88 48
+Q97 56 92 63
+L52 63
+L56 48Z"
+fill="#292933"/>
+`,
+
+/* trainers */
+`
+<path
+d="
+M10 47
+L44 47
+L49 64
+L7 64
+Q3 55 10 47Z"
+fill="white"
+stroke="#292933"
+stroke-width="3"/>
+
+<path
+d="
+M56 47
+L90 47
+Q97 55 93 64
+L51 64
+L56 47Z"
+fill="white"
+stroke="#292933"
+stroke-width="3"/>
+`,
+
+/* coloured */
+`
+<path
+d="
+M12 48
+L44 48
+L48 63
+L8 63
+Q3 56 12 48Z"
+fill="#6957e8"/>
+
+<path
+d="
+M56 48
+L88 48
+Q97 56 92 63
+L52 63
+L56 48Z"
+fill="#6957e8"/>
+`,
+
+/* pink */
+`
+<path
+d="
+M12 48
+L44 48
+L48 63
+L8 63
+Q3 56 12 48Z"
+fill="#ea5b7a"/>
+
+<path
+d="
+M56 48
+L88 48
+Q97 56 92 63
+L52 63
+L56 48Z"
+fill="#ea5b7a"/>
+`
+
+];
+
+return baseThumbnail(styles[index]);
+}
+
+
+/* =========================================================
+GENERATE VISUAL OPTIONS
+========================================================= */
+
+function createOptions() {
+
+document
+.querySelectorAll("[data-category]")
+.forEach(grid => {
+
+const category =
+grid.dataset.category;
+
+grid.innerHTML = "";
+
+for (
+let i = 0;
+i < optionCounts[category];
+i++
+) {
+
+const button =
+document.createElement("button");
+
+button.type = "button";
+button.className = "option";
+
+button.dataset.index = i;
+
+/*
+These descriptions are available to
+assistive technology but are NOT shown
+visually.
+*/
+
+button.setAttribute(
+"aria-label",
+`${category} visual option ${i + 1}`
+);
+
+let content = "";
+
+switch (category) {
+
+case "face":
+content =
+faceThumbnail(i);
+break;
+
+case "skin":
+content =
+skinThumbnail(i);
+break;
+
+case "hairColor":
+content =
+hairColourThumbnail(i);
+break;
+
+case "hair":
+content =
+hairThumbnail(i);
+break;
+
+case "eyes":
+content =
+eyeThumbnail(i);
+break;
+
+case "nose":
+content =
+noseThumbnail(i);
+break;
+
+case "mouth":
+content =
+mouthThumbnail(i);
+break;
+
+case "ears":
+content =
+earThumbnail(i);
+break;
+
+case "accessory":
+content =
+accessoryThumbnail(i);
+break;
+
+case "clothes":
+content =
+clothesThumbnail(i);
+break;
+
+case "clothesColor":
+content = `
+<svg
+viewBox="0 0 100 70"
+xmlns="http://www.w3.org/2000/svg">
+
+<circle
+cx="50"
+cy="35"
+r="23"
+fill="${clothesColours[i]}"
+stroke="rgba(0,0,0,.12)"
+stroke-width="2"/>
+</svg>
+`;
+break;
+
+case "shoes":
+content =
+shoeThumbnail(i);
+break;
+}
+
+button.innerHTML = content;
+
+button.addEventListener(
+"click",
+() => {
+
+saveHistory();
+
+state[category] = i;
+
+render();
+
+}
+);
+
+grid.appendChild(button);
+}
+});
+}
+
+
+/* =========================================================
+MAIN AVATAR
+========================================================= */
+
+function drawFace() {
+
+const skin =
+skinColours[state.skin];
+
+const faces = [
+
+`
+<circle
+cx="250"
+cy="315"
+r="105"
+fill="${skin}"/>
+`,
+
+`
+<ellipse
+cx="250"
+cy="315"
+rx="100"
+ry="115"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="
+M155 220
+Q150 350 175 410
+Q200 470 250 475
+Q300 470 325 410
+Q350 350 345 220
+Q330 145 250 140
+Q170 145 155 220Z"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="
+M165 205
+Q145 310 170 405
+Q190 470 250 480
+Q310 470 330 405
+Q355 310 335 205
+Q310 145 250 145
+Q190 145 165 205Z"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="
+M175 190
+Q150 310 175 405
+Q200 475 250 480
+Q300 475 325 405
+Q350 310 325 190
+Q300 145 250 145
+Q200 145 175 190Z"
+fill="${skin}"/>
+`
+
+];
+
+return faces[state.face];
+}
+
+
+function drawEars() {
+
+const skin =
+skinColours[state.skin];
+
+const ears = [
+
+`
+<ellipse
+cx="158"
+cy="315"
+rx="18"
+ry="30"
+fill="${skin}"/>
+
+<ellipse
+cx="342"
+cy="315"
+rx="18"
+ry="30"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="
+M158 285
+Q125 290 140 330
+Q148 350 165 335"
+fill="${skin}"/>
+
+<path
+d="
+M342 285
+Q375 290 360 330
+Q352 350 335 335"
+fill="${skin}"/>
+`,
+
+`
+<circle
+cx="158"
+cy="315"
+r="18"
+fill="${skin}"/>
+
+<circle
+cx="342"
+cy="315"
+r="18"
+fill="${skin}"/>
+`,
+
+`
+<path
+d="
+M158 285
+Q130 310 150 350
+Q165 360 170 330"
+fill="${skin}"/>
+
+<path
+d="
+M342 285
+Q370 310 350 350
+Q335 360 330 330"
+fill="${skin}"/>
+`
+];
+
+return ears[state.ears];
+}
+
+
+function drawHair() {
+
+const hair =
+hairColours[state.hairColor];
+
+const styles = [
+
+`
+<path
+d="
+M155 260
+Q140 120 250 110
+Q360 120 345 260
+Q325 205 300 190
+Q280 220 250 190
+Q215 220 190 190
+Q170 220 155 260Z"
+fill="${hair}"/>
+`,
+
+`
+<path
+d="
+M145 280
+Q120 110 250 105
+Q380 110 355 280
+Q325 220 310 175
+Q250 210 190 175
+Q175 220 145 280Z"
+fill="${hair}"/>
+`,
+
+`
+<path
+d="
+M155 245
+Q135 125 250 110
+Q365 125 345 245
+Q320 180 285 165
+Q250 215 215 165
+Q180 180 155 245Z"
+fill="${hair}"/>
+`,
+
+`
+<path
+d="
+M145 250
+Q125 105 250 105
+Q375 105 355 250
+Q325 180 250 180
+Q175 180 145 250Z"
+fill="${hair}"/>
+`,
+
+`
+<path
+d="
+M150 250
+Q130 120 250 105
+Q370 120 350 250
+Q330 215 320 175
+Q300 140 275 175
+Q250 125 225 175
+Q200 140 180 175
+Q170 215 150 250Z"
+fill="${hair}"/>
+
+<circle
+cx="350"
+cy="165"
+r="28"
+fill="${hair}"/>
+`,
+
+`
+<path
+d="
+M150 250
+Q140 130 250 110
+Q360 130 350 250
+Q330 200 315 180
+Q285 210 250 180
+Q215 210 185 180
+Q170 200 150 250Z"
+fill="${hair}"/>
+
+<path
+d="
+M190 150
+Q170 100 210 90"
+stroke="${hair}"
+stroke-width="22"
+fill="none"
+stroke-linecap="round"/>
+`
+
+];
+
+return styles[state.hair];
+}
+
+
+function drawEyes() {
+
+const styles = [
+
+`
+<ellipse
+cx="205"
+cy="310"
+rx="18"
+ry="13"
+fill="white"/>
+
+<ellipse
+cx="295"
+cy="310"
+rx="18"
+ry="13"
+fill="white"/>
+
+<circle cx="205" cy="310" r="7"/>
+<circle cx="295" cy="310" r="7"/>
+`,
+
+`
+<circle
+cx="205"
+cy="310"
+r="17"
+fill="white"/>
+
+<circle
+cx="295"
+cy="310"
+r="17"
+fill="white"/>
+
+<circle cx="205" cy="310" r="8"/>
+<circle cx="295" cy="310" r="8"/>
+`,
+
+`
+<path
+d="M185 315 Q205 295 225 315"
+stroke="#292933"
+stroke-width="6"
+fill="none"
+stroke-linecap="round"/>
+
+<path
+d="M275 315 Q295 295 315 315"
+stroke="#292933"
+stroke-width="6"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<ellipse
+cx="205"
+cy="310"
+rx="12"
+ry="18"
+fill="white"/>
+
+<ellipse
+cx="295"
+cy="310"
+rx="12"
+ry="18"
+fill="white"/>
+
+<circle cx="205" cy="310" r="6"/>
+<circle cx="295" cy="310" r="6"/>
+`,
+
+`
+<ellipse
+cx="205"
+cy="310"
+rx="23"
+ry="9"
+fill="#292933"/>
+
+<ellipse
+cx="295"
+cy="310"
+rx="23"
+ry="9"
+fill="#292933"/>
+`,
+
+`
+<circle
+cx="205"
+cy="310"
+r="8"
+fill="#292933"/>
+
+<circle
+cx="295"
+cy="310"
+r="8"
+fill="#292933"/>
+`
+];
+
+return styles[state.eyes];
+}
+
+
+function drawNose() {
+
+const styles = [
+
+`
+<path
+d="M250 320 Q240 350 250 355"
+fill="none"
+stroke="#9B614D"
+stroke-width="4"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="
+M250 315
+L240 355
+Q250 363 260 355"
+fill="none"
+stroke="#9B614D"
+stroke-width="4"/>
+`,
+
+`
+<path
+d="
+M250 315
+Q275 350 250 358
+Q225 350 250 315"
+fill="none"
+stroke="#9B614D"
+stroke-width="4"/>
+`,
+
+`
+<path
+d="M250 320 L250 355"
+stroke="#9B614D"
+stroke-width="6"
+stroke-linecap="round"/>
+`,
+
+`
+<circle
+cx="250"
+cy="350"
+r="7"
+fill="#9B614D"/>
+`
+
+];
+
+return styles[state.nose];
+}
+
+
+function drawMouth() {
+
+const styles = [
+
+`
+<path
+d="M225 390 Q250 405 275 390"
+stroke="#8C3D3D"
+stroke-width="6"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="
+M225 395
+Q250 380 275 395
+Q250 410 225 395Z"
+fill="#B84D63"/>
+`,
+
+`
+<path
+d="M225 395 Q250 395 275 395"
+stroke="#8C3D3D"
+stroke-width="5"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="M225 390 Q250 410 275 390"
+stroke="#7E3038"
+stroke-width="8"
+fill="none"
+stroke-linecap="round"/>
+`,
+
+`
+<path
+d="
+M228 392
+Q250 380 272 392
+Q250 398 228 392Z"
+fill="#D66A7C"/>
+
+<path
+d="
+M228 397
+Q250 412 272 397
+Q250 410 228 397Z"
+fill="#A73F51"/>
+`,
+
+`
+<path
+d="M232 398 Q250 403 268 398"
+stroke="#9D4A4A"
+stroke-width="4"
+fill="none"
+stroke-linecap="round"/>
+`
+
+];
+
+return styles[state.mouth];
+}
+
+
+function drawAccessory() {
+
+const styles = [
+
+``,
+
+`
+<circle
+cx="205"
+cy="310"
+r="27"
+fill="none"
+stroke="#292933"
+stroke-width="6"/>
+
+<circle
+cx="295"
+cy="310"
+r="27"
+fill="none"
+stroke="#292933"
+stroke-width="6"/>
+
+<path
+d="M232 310 L268 310"
+stroke="#292933"
+stroke-width="6"/>
+`,
+
+`
+<rect
+x="177"
+y="286"
+width="56"
+height="45"
+rx="10"
+fill="none"
+stroke="#292933"
+stroke-width="6"/>
+
+<rect
+x="267"
+y="286"
+width="56"
+height="45"
+rx="10"
+fill="none"
+stroke="#292933"
+stroke-width="6"/>
+
+<path
+d="M233 307 L267 307"
+stroke="#292933"
+stroke-width="6"/>
+`,
+
+`
+<path
+d="
+M178 292
+L232 292
+L225 328
+L188 328Z"
+fill="#282B35"/>
+
+<path
+d="
+M268 292
+L322 292
+L312 328
+L275 328Z"
+fill="#282B35"/>
+
+<path
+d="M232 305 L268 305"
+stroke="#282B35"
+stroke-width="6"/>
+`,
+
+`
+<path
+d="
+M330 215
+L336 230
+L352 230
+L339 240
+L344 256
+L330 246
+L316 256
+L321 240
+L308 230
+L324 230Z"
+fill="#F0A83A"/>
+`,
+
+`
+<path
+d="
+M325 190
+Q365 160 370 195
+Q365 225 325 205Z"
+fill="#EA5B7A"/>
+
+<path
+d="
+M325 190
+Q285 160 280 195
+Q285 225 325 205Z"
+fill="#EA5B7A"/>
+
+<circle
+cx="325"
+cy="198"
+r="9"
+fill="#C73F5D"/>
+`
+
+];
+
+return styles[state.accessory];
+}
+
+
+function drawClothes() {
+
+const colour =
+clothesColours[state.clothesColor];
+
+const styles = [
+
+`
+<path
+d="
+M165 470
+L210 445
+Q250 470 290 445
+L335 470
+L375 575
+Q315 610 250 610
+Q185 610 125 575Z"
+fill="${colour}"/>
+
+<path
+d="M210 445 Q250 480 290 445"
+stroke="white"
+stroke-opacity=".4"
+stroke-width="5"
+fill="none"/>
+`,
+
+`
+<path
+d="
+M165 470
+Q185 435 210 435
+L250 475
+L290 435
+Q315 435 335 470
+L385 590
+Q320 620 250 620
+Q180 620 115 590Z"
+fill="${colour}"/>
+
+<path
+d="M205 450 Q250 500 295 450"
+fill="none"
+stroke="white"
+stroke-opacity=".35"
+stroke-width="8"/>
+`,
+
+`
+<path
+d="
+M165 465
+L210 440
+L250 475
+L290 440
+L335 465
+L375 590
+L250 620
+L125 590Z"
+fill="${colour}"/>
+
+<path
+d="M250 475 L250 615"
+stroke="white"
+stroke-opacity=".6"
+stroke-width="5"/>
+`,
+
+`
+<path
+d="
+M210 445
+L290 445
+L315 505
+L385 610
+L115 610
+L185 505Z"
+fill="${colour}"/>
+
+<path
+d="M210 445 Q250 475 290 445"
+stroke="white"
+stroke-opacity=".4"
+stroke-width="5"
+fill="none"/>
+`,
+
+`
+<path
+d="
+M175 465
+L215 445
+L250 475
+L285 445
+L325 465
+L365 590
+L135 590Z"
+fill="${colour}"/>
+
+<path
+d="M220 450 L250 480 L280 450"
+stroke="white"
+stroke-opacity=".35"
+stroke-width="6"
+fill="none"/>
+`
+
+];
+
+return styles[state.clothes];
+}
+
+
+function drawShoes() {
+
+const styles = [
+
+`
+<path
+d="
+M150 610
+L220 610
+L225 635
+L135 635
+Q125 625 150 610Z"
+fill="#292933"/>
+
+<path
+d="
+M280 610
+L350 610
+L375 635
+L275 635
+Q275 620 280 610Z"
+fill="#292933"/>
+`,
+
+`
+<path
+d="
+M145 605
+L220 605
+L230 638
+L130 638
+Q125 620 145 605Z"
+fill="white"
+stroke="#292933"
+stroke-width="5"/>
+
+<path
+d="
+M280 605
+L355 605
+Q375 620 370 638
+L270 638
+L280 605Z"
+fill="white"
+stroke="#292933"
+stroke-width="5"/>
+`,
+
+`
+<path
+d="
+M145 610
+L220 610
+L225 635
+L130 635
+Q125 625 145 610Z"
+fill="#6C5CE7"/>
+
+<path
+d="
+M280 610
+L355 610
+Q375 625 370 635
+L275 635
+L280 610Z"
+fill="#6C5CE7"/>
+`,
+
+`
+<path
+d="
+M145 610
+L220 610
+L225 638
+L130 638
+Q125 625 145 610Z"
+fill="#EA5B7A"/>
+
+<path
+d="
+M280 610
+L355 610
+Q375 625 370 638
+L275 638
+L280 610Z"
+fill="#EA5B7A"/>
+`
+
+];
+
+return styles[state.shoes];
+}
+
+
+/* =========================================================
+RENDER MAIN CHARACTER
+========================================================= */
+
+function renderAvatar() {
+
+const character =
+document.getElementById(
+"avatarCharacter"
+);
+
+character.innerHTML = `
+
+${drawHair()}
+
+${drawEars()}
+
+${drawFace()}
+
+${drawEyes()}
+
+${drawNose()}
+
+${drawMouth()}
+
+${drawHair()}
+
+${drawAccessory()}
+
+${drawClothes()}
+
+${drawShoes()}
+
+`;
+}
+
+
+/* =========================================================
+UPDATE SELECTIONS
+========================================================= */
+
+function updateSelectedOptions() {
+
+document
+.querySelectorAll("[data-category]")
+.forEach(grid => {
+
+const category =
+grid.dataset.category;
+
+grid
+.querySelectorAll(".option")
+.forEach((button, index) => {
+
+const selected =
+index ===
+state[category];
+
+button.classList.toggle(
+"selected",
+selected
+);
+
+button.setAttribute(
+"aria-pressed",
+selected
+);
+
+});
+});
+}
+
+
+/*
+Because the visual thumbnails depend on things like
+current skin/hair colour, regenerate them whenever
+the character changes.
+*/
+
+function refreshOptionImages() {
+
+createOptions();
+updateSelectedOptions();
 
 }
 
-function bigEyes() {
 
-document.getElementById("eye1").style.width = "50px";
-document.getElementById("eye1").style.height = "50px";
+/* =========================================================
+RENDER EVERYTHING
+========================================================= */
 
-document.getElementById("eye2").style.width = "50px";
-document.getElementById("eye2").style.height = "50px";
+function render() {
+
+renderAvatar();
+
+refreshOptionImages();
+
+updateHistoryButtons();
 
 }
-function brownHair() {
-document.getElementById("hair").style.background = "brown";
+
+
+/* =========================================================
+HISTORY
+========================================================= */
+
+function saveHistory() {
+
+history =
+history.slice(
+0,
+historyIndex + 1
+);
+
+history.push(
+cloneState(state)
+);
+
+historyIndex =
+history.length - 1;
+
+updateHistoryButtons();
 }
 
-function blackHair() {
-document.getElementById("hair").style.background = "black";
+
+function updateHistoryButtons() {
+
+document
+.getElementById("undoButton")
+.disabled =
+historyIndex <= 0;
+
+document
+.getElementById("redoButton")
+.disabled =
+historyIndex >=
+history.length - 1;
 }
 
-function blondeHair() {
-document.getElementById("hair").style.background = "gold";
+
+document
+.getElementById("undoButton")
+.addEventListener(
+"click",
+() => {
+
+if (
+historyIndex <= 0
+) return;
+
+historyIndex--;
+
+state =
+cloneState(
+history[historyIndex]
+);
+
+render();
+
 }
+);
+
+
+document
+.getElementById("redoButton")
+.addEventListener(
+"click",
+() => {
+
+if (
+historyIndex >=
+history.length - 1
+) return;
+
+historyIndex++;
+
+state =
+cloneState(
+history[historyIndex]
+);
+
+render();
+
+}
+);
+
+
+/* =========================================================
+RANDOM
+========================================================= */
+
+document
+.getElementById("randomButton")
+.addEventListener(
+"click",
+() => {
+
+saveHistory();
+
+Object.keys(state)
+.forEach(category => {
+
+state[category] =
+Math.floor(
+Math.random() *
+optionCounts[category]
+);
+
+});
+
+render();
+
+}
+);
+
+
+/* =========================================================
+RESET
+========================================================= */
+
+document
+.getElementById("resetButton")
+.addEventListener(
+"click",
+() => {
+
+saveHistory();
+
+state =
+cloneState(
+defaultState
+);
+
+render();
+
+}
+);
+
+
+/* =========================================================
+DOWNLOAD SVG
+========================================================= */
+
+document
+.getElementById("svgButton")
+.addEventListener(
+"click",
+() => {
+
+const svg =
+document.getElementById(
+"avatar"
+);
+
+const clone =
+svg.cloneNode(true);
+
+clone.setAttribute(
+"xmlns",
+"http://www.w3.org/2000/svg"
+);
+
+const source =
+new XMLSerializer()
+.serializeToString(
+clone
+);
+
+const blob =
+new Blob(
+[source],
+{
+type:
+"image/svg+xml"
+}
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const link =
+document.createElement("a");
+
+link.href = url;
+
+link.download =
+"my-avatar.svg";
+
+document.body.appendChild(link);
+
+link.click();
+
+link.remove();
+
+URL.revokeObjectURL(url);
+
+}
+);
+
+
+/* =========================================================
+DOWNLOAD PNG
+========================================================= */
+
+document
+.getElementById("pngButton")
+.addEventListener(
+"click",
+() => {
+
+const svg =
+document.getElementById(
+"avatar"
+);
+
+const clone =
+svg.cloneNode(true);
+
+clone.setAttribute(
+"xmlns",
+"http://www.w3.org/2000/svg"
+);
+
+const source =
+new XMLSerializer()
+.serializeToString(
+clone
+);
+
+const blob =
+new Blob(
+[source],
+{
+type:
+"image/svg+xml"
+}
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const image =
+new Image();
+
+image.onload =
+function () {
+
+const canvas =
+document.createElement(
+"canvas"
+);
+
+canvas.width = 1000;
+canvas.height = 1300;
+
+const ctx =
+canvas.getContext("2d");
+
+ctx.drawImage(
+image,
+0,
+0,
+1000,
+1300
+);
+
+URL.revokeObjectURL(url);
+
+canvas.toBlob(
+blob => {
+
+const pngURL =
+URL.createObjectURL(
+blob
+);
+
+const link =
+document.createElement(
+"a"
+);
+
+link.href =
+pngURL;
+
+link.download =
+"my-avatar.png";
+
+document.body
+.appendChild(
+link
+);
+
+link.click();
+
+link.remove();
+
+URL.revokeObjectURL(
+pngURL
+);
+
+},
+"image/png"
+);
+
+};
+
+image.src = url;
+
+}
+);
+
+
+/* =========================================================
+KEYBOARD SHORTCUTS
+========================================================= */
+
+document.addEventListener(
+"keydown",
+event => {
+
+if (
+(event.ctrlKey ||
+event.metaKey) &&
+event.key.toLowerCase() === "z"
+) {
+
+event.preventDefault();
+
+if (event.shiftKey) {
+
+document
+.getElementById(
+"redoButton"
+)
+.click();
+
+} else {
+
+document
+.getElementById(
+"undoButton"
+)
+.click();
+
+}
+}
+
+if (
+(event.ctrlKey ||
+event.metaKey) &&
+event.key.toLowerCase() === "y"
+) {
+
+event.preventDefault();
+
+document
+.getElementById(
+"redoButton"
+)
+.click();
+
+}
+
+}
+);
+
+
+/* =========================================================
+START
+========================================================= */
+
+createOptions();
+
+history = [
+cloneState(state)
+];
+
+historyIndex = 0;
+
+render();
 
 </script>
-  
+
 </body>
 </html>
-
-
